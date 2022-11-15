@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Slf4j
@@ -91,6 +92,17 @@ public class ProfileService {
         return new ApiResponse<>("Success!", 200, false);
     }
 
+
+    public Boolean delete(String id) {
+        ProfileEntity entity = get(id);
+
+        if (entity == null) {
+            log.info("Profile not found!{}", id);
+            return false;
+        }
+        profileRepository.updateVisibleAndDeletedDate(id, false, LocalDateTime.now());
+        return true;
+    }
 
 
 

@@ -6,6 +6,7 @@ import lombok.ToString;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Getter
 @Setter
@@ -22,4 +23,7 @@ public class ProfileCreateDTO {
 
     @NotBlank(message = "Contact is required!")
     private String phone;
+
+    @NotNull(message = "full name not be null")
+    private String fullName;
 }

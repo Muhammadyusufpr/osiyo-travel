@@ -2,7 +2,6 @@ package com.osiyotravel.config.detail;
 
 
 import com.osiyotravel.entity.ProfileEntity;
-import com.osiyotravel.enums.ProfileRole;
 import com.osiyotravel.repository.ProfileRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,7 +25,7 @@ public class CustomProfileDetailsService implements UserDetailsService {
 
         CustomProfileDetails details = null;
 
-        if(profileEntity != null && profileEntity.getRole().equals(ProfileRole.ROLE_MANAGER)){
+        if(profileEntity != null){
             details = new CustomProfileDetails
                     (
                             profileEntity.getId(),

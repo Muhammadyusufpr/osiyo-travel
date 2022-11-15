@@ -28,6 +28,10 @@ public class BaseEntity {
     @CreationTimestamp
     protected LocalDateTime createdDate;
 
+    @Column(name = "deleted_date")
+    @CreationTimestamp
+    protected LocalDateTime deletedDate;
+
 
     @Column(name = "visible")
     protected Boolean visible = Boolean.TRUE;

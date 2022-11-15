@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 public class ProfileResDTO {
     private String id;
     private String username;
+    private String fullName;
     private String phone;
     private ProfileRole role;
     private LocalDateTime createdDate;

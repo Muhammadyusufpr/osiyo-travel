@@ -36,7 +36,7 @@ public class AuthService {
 
 
         if (!passwordEncoder.matches(dto.getPassword(), profileEntity.getPassword())) {
-            log.warn("Phone number Or Password wrong! username = {}", dto.getUsername());
+            log.warn("Phone number Or Password wrong! username = {}", dto.getPassword());
             return new ApiResponse<>("Phone number Or Password wrong!", 400, true);
         }
 
