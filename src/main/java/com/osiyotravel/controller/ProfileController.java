@@ -3,7 +3,6 @@ package com.osiyotravel.controller;
 import com.osiyotravel.dto.deatil.ApiResponse;
 import com.osiyotravel.dto.request.ProfileCreateDTO;
 import com.osiyotravel.dto.request.ProfileDTOForSuperAdmin;
-import com.osiyotravel.dto.response.FilialResponseDTO;
 import com.osiyotravel.dto.response.ProfileResDTO;
 import com.osiyotravel.dto.update.ProfileUpdateDTO;
 import com.osiyotravel.service.ProfileService;
@@ -68,11 +67,11 @@ public class ProfileController {
         return ResponseEntity.ok(profileService.delete(id));
     }
 
-    @ApiOperation(value = "GetAll", notes = "Method used for get all profiles only can ROLE_ADMIN")
+    @ApiOperation(value = "GetAll", notes = "Method used for get all profiles ROLE_ADMIN, ROLE_SUPER_ADMIN")
     @PreAuthorize("hasAnyRole('ROLE_SUPER_ADMIN','ROLE_ADMIN')")
     @PutMapping("")
     public ResponseEntity<ApiResponse<List<ProfileResDTO>>> getAll(@RequestBody ProfileDTOForSuperAdmin dto) {
-        log.info("Get all profiles:");
+        log.info("Get all profiles:{}", dto);
         return ResponseEntity.ok(profileService.getAll(dto));
     }
 
