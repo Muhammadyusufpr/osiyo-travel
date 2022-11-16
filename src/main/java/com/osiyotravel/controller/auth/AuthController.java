@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/api/v1/auth")
 @Api(tags = "Auth ✅")
@@ -67,15 +68,6 @@ public class AuthController {
         log.info("Login employee dto = {}", dto);
         return ResponseEntity.ok(authService.login(dto));
     }
-
-    /*@GetMapping("/profile/reflesh-token/{token}")
-    @ApiOperation(value = "Reflesh token Employee", notes = "Method used for reflesh token Only employee")
-    public ResponseEntity<ApiResponse<?>> refreshTokenEmployee(@RequestHeader(value = "Accept-Language",
-            defaultValue = "uz") LanguageEnum lang, @PathVariable("token") String token) {
-
-        log.info("Refresh profile token = {}", token);
-        return ResponseEntity.ok(authService.refreshTokenEmployee(token, lang));
-    }*/
 
 
 }

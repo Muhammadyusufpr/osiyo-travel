@@ -92,8 +92,9 @@ public class FilialService {
     }
 
 
-    public List<FilialResponseDTO> getAll() {
-        return filialRepository.findAllByOwnerId(EntityDetails.getId()).stream().map(this::toDTO).toList();
+    public ApiResponse<List<FilialResponseDTO>> getAll() {
+        List<FilialResponseDTO> list = filialRepository.findAllByOwnerId(EntityDetails.getId()).stream().map(this::toDTO).toList();
+        return new ApiResponse<>("Success!", 200, false, list);
     }
 
 

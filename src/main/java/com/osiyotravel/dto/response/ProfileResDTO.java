@@ -19,4 +19,5 @@ public class ProfileResDTO {
     private ProfileRole role;
     private LocalDateTime createdDate;
     private String accessToken;
+    private String filialId;
 }

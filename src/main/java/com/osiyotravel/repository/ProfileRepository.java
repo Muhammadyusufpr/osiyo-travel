@@ -1,6 +1,7 @@
 package com.osiyotravel.repository;
 
 import com.osiyotravel.entity.ProfileEntity;
+import com.osiyotravel.enums.ProfileRole;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -21,6 +22,7 @@ public interface ProfileRepository extends JpaRepository<ProfileEntity, String> 
     @Query("update ProfileEntity set visible = ?2, deletedDate = ?3 where  id = ?1")
     void updateVisibleAndDeletedDate(String id, boolean b, LocalDateTime time);
 
-    List<ProfileEntity> findAllByFilialId(String filialId);
+    List<ProfileEntity> findAllByFilialIdAndRole(String filialId, ProfileRole role);
+
 
 }

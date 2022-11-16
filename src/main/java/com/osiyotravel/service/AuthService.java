@@ -44,6 +44,7 @@ public class AuthService {
         profile.setUsername(profileEntity.getUsername());
         profile.setPhone(profileEntity.getPhone());
         profile.setCreatedDate(profileEntity.getCreatedDate());
+        profile.setRole(profileEntity.getRole());
 
         JwtDTO jwtDTO = JwtDTO.builder()
                 .id(profileEntity.getId())

@@ -16,7 +16,7 @@ public class FilialEntity extends BaseEntity {
 
     @Column(name = "owner_id")
     private String ownerId;
-    @JoinColumn(name = "owner_id", insertable = false, unique = true)
+    @JoinColumn(name = "owner_id", insertable = false, updatable = false)
     @OneToOne(fetch = FetchType.LAZY)
     private ProfileEntity owner;
 

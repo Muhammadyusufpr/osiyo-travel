@@ -3,6 +3,7 @@ package com.osiyotravel.service;
 import com.osiyotravel.config.detail.EntityDetails;
 import com.osiyotravel.dto.deatil.ApiResponse;
 import com.osiyotravel.dto.request.ProfileCreateDTO;
+import com.osiyotravel.dto.request.ProfileDTOForSuperAdmin;
 import com.osiyotravel.dto.response.ProfileResDTO;
 import com.osiyotravel.dto.update.ProfileUpdateDTO;
 import com.osiyotravel.entity.ProfileEntity;
@@ -54,7 +55,17 @@ public class ProfileService {
         Optional<ProfileEntity> optional = profileRepository.findByIdAndVisibleTrue(id);
 
         if (optional.isEmpty()) {
-            log.info("Profile not found!", id);
+            log.info("Profile not found!{}", id);
+            return new ApiResponse<>("Profile not found!", 400, true);
+        }
+        return new ApiResponse<>("Success!", 200, false, toDTO(optional.get()));
+    }
+
+    public ApiResponse<?> getCurrentProfile() {
+        Optional<ProfileEntity> optional = profileRepository.findByIdAndVisibleTrue(EntityDetails.getId());
+
+        if (optional.isEmpty()) {
+            log.info("Profile not found!{}", EntityDetails.getId());
             return new ApiResponse<>("Profile not found!", 400, true);
         }
         return new ApiResponse<>("Success!", 200, false, toDTO(optional.get()));
@@ -68,6 +79,7 @@ public class ProfileService {
         dto.setRole(entity.getRole());
         dto.setPhone(entity.getPhone());
         dto.setUsername(entity.getUsername());
+        dto.setFilialId(entity.getFilialId());
         return dto;
     }
 
@@ -107,8 +119,10 @@ public class ProfileService {
     }
 
 
-    public List<ProfileResDTO> getAll() {
-        return profileRepository.findAllByFilialId(EntityDetails.getId()).stream().map(this::toDTO).toList();
+    public ApiResponse<List<ProfileResDTO>> getAll(ProfileDTOForSuperAdmin dto) {
+        List<ProfileResDTO> list = profileRepository.findAllByFilialIdAndRole(EntityDetails.getId(),
+                dto.getRole()).stream().map(this::toDTO).toList();
+        return new ApiResponse<>("Success!", 200, false, list);
     }
 
 }

@@ -8,7 +8,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 
 public class EntityDetails {
 
-    private static CustomProfileDetails getEntity() {
+    public static CustomProfileDetails getEntity() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return (CustomProfileDetails) authentication.getPrincipal();
     }

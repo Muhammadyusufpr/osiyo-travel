@@ -2,6 +2,7 @@ package com.osiyotravel.controller;
 
 import com.osiyotravel.dto.deatil.ApiResponse;
 import com.osiyotravel.dto.request.ProfileCreateDTO;
+import com.osiyotravel.dto.request.ProfileDTOForSuperAdmin;
 import com.osiyotravel.dto.response.FilialResponseDTO;
 import com.osiyotravel.dto.response.ProfileResDTO;
 import com.osiyotravel.dto.update.ProfileUpdateDTO;
@@ -18,6 +19,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
+@CrossOrigin
 @RequestMapping("/api/v1/profile")
 @Slf4j
 @Api(tags = "Profile Controller 👥")
@@ -27,7 +29,7 @@ public class ProfileController {
 
 
     @ApiOperation(value = "Create", notes = "Method used for create Profile only ADMIN")
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_SUPER_ADMIN')")
     @PostMapping("")
     public ResponseEntity<ApiResponse<?>> create(@RequestBody @Valid ProfileCreateDTO dto) {
         log.info("Create Profile:{}", dto);
@@ -40,6 +42,14 @@ public class ProfileController {
     public ResponseEntity<?> getById(@PathVariable String id) {
         log.info("Get Profile:{}", id);
         return ResponseEntity.ok(profileService.getById(id));
+    }
+
+
+    @ApiOperation(value = "Get", notes = "Method used for get current profile")
+    @GetMapping("/current")
+    public ResponseEntity<?> getCurrentProfile() {
+        log.info("Get Profile");
+        return ResponseEntity.ok(profileService.getCurrentProfile());
     }
 
     @ApiOperation(value = "Update", notes = "Method used for update profile detail")
@@ -59,11 +69,11 @@ public class ProfileController {
     }
 
     @ApiOperation(value = "GetAll", notes = "Method used for get all profiles only can ROLE_ADMIN")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @GetMapping("/getAll")
-    public ResponseEntity<List<ProfileResDTO>> getAll() {
+    @PreAuthorize("hasAnyRole('ROLE_SUPER_ADMIN','ROLE_ADMIN')")
+    @PutMapping("")
+    public ResponseEntity<ApiResponse<List<ProfileResDTO>>> getAll(@RequestBody ProfileDTOForSuperAdmin dto) {
         log.info("Get all profiles:");
-        return ResponseEntity.ok(profileService.getAll());
+        return ResponseEntity.ok(profileService.getAll(dto));
     }
 
 

@@ -1,5 +1,6 @@
 package com.osiyotravel.dto.request;
 
+import com.osiyotravel.enums.ProfileRole;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -26,4 +27,7 @@ public class ProfileCreateDTO {
 
     @NotNull(message = "full name not be null")
     private String fullName;
+
+    private ProfileRole role;
+
 }

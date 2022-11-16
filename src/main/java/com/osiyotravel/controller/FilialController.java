@@ -1,5 +1,6 @@
 package com.osiyotravel.controller;
 
+import com.osiyotravel.dto.deatil.ApiResponse;
 import com.osiyotravel.dto.request.FilialRequestDTO;
 import com.osiyotravel.dto.response.FilialResponseDTO;
 import com.osiyotravel.service.FilialService;
@@ -7,7 +8,6 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.boot.autoconfigure.amqp.RabbitRetryTemplateCustomizer;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -16,6 +16,7 @@ import java.util.List;
 
 
 @RestController
+@CrossOrigin
 @RequestMapping("/api/v1/filial")
 @Slf4j
 @Api(tags = "Filial Controller 👥")
@@ -59,8 +60,8 @@ public class FilialController {
 
     @ApiOperation(value = "GetAll", notes = "Method used for get all filials only can ROLE_SUPER_ADMIN")
     @PreAuthorize("hasRole('ROLE_SUPER_ADMIN')")
-    @GetMapping("/getAll")
-    public ResponseEntity<List<FilialResponseDTO>> getAll() {
+    @GetMapping("")
+    public ResponseEntity<ApiResponse<List<FilialResponseDTO>>> getAll() {
         log.info("Get all filial:");
         return ResponseEntity.ok(filialService.getAll());
     }
