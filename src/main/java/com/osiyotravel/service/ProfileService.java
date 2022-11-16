@@ -1,5 +1,6 @@
 package com.osiyotravel.service;
 
+import com.osiyotravel.config.detail.EntityDetails;
 import com.osiyotravel.dto.deatil.ApiResponse;
 import com.osiyotravel.dto.request.ProfileCreateDTO;
 import com.osiyotravel.dto.response.ProfileResDTO;
@@ -13,6 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 @Slf4j
@@ -105,6 +107,8 @@ public class ProfileService {
     }
 
 
-
+    public List<ProfileResDTO> getAll() {
+        return profileRepository.findAllByFilialId(EntityDetails.getId()).stream().map(this::toDTO).toList();
+    }
 
 }

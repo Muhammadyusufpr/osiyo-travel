@@ -1,11 +1,18 @@
 package com.osiyotravel.controller;
 
+import com.osiyotravel.dto.request.FilialRequestDTO;
+import com.osiyotravel.dto.response.FilialResponseDTO;
 import com.osiyotravel.service.FilialService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.boot.autoconfigure.amqp.RabbitRetryTemplateCustomizer;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 
 @RestController
@@ -17,6 +24,46 @@ public class FilialController {
     private final FilialService filialService;
 
 
+    @ApiOperation(value = "Create", notes = "Method used for create filial only can ROLE_SUPER_ADMIN")
+    @PreAuthorize("hasRole('ROLE_SUPER_ADMIN')")
+    @PostMapping("")
+    public ResponseEntity<?> create(@RequestBody FilialRequestDTO dto) {
+        log.info("Create filial:{}", dto);
+        return ResponseEntity.ok(filialService.create(dto));
+    }
+
+
+    @ApiOperation(value = "Get", notes = "Method used for get filial by id only can ROLE_SUPER_ADMIN")
+    @PreAuthorize("hasRole('ROLE_SUPER_ADMIN')")
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getById(@PathVariable String id) {
+        log.info("Get filial by id:{}", id);
+        return ResponseEntity.ok(filialService.getById(id));
+    }
+
+    @ApiOperation(value = "Update", notes = "Method used for update filial only can ROLE_SUPER_ADMIN")
+    @PreAuthorize("hasRole('ROLE_SUPER_ADMIN')")
+    @PutMapping("/{id}")
+    public ResponseEntity<?> update(@PathVariable String id, @RequestBody FilialRequestDTO dto) {
+        log.info("Update filial:{}{}", id, dto);
+        return ResponseEntity.ok(filialService.update(id, dto));
+    }
+
+    @ApiOperation(value = "Delete", notes = "Method used for delete filial by id only can ROLE_SUPER_ADMIN")
+    @PreAuthorize("hasRole('ROLE_SUPER_ADMIN')")
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Boolean> delete(@PathVariable String id) {
+        log.info("Delete filial:{}", id);
+        return ResponseEntity.ok(filialService.delete(id));
+    }
+
+    @ApiOperation(value = "GetAll", notes = "Method used for get all filials only can ROLE_SUPER_ADMIN")
+    @PreAuthorize("hasRole('ROLE_SUPER_ADMIN')")
+    @GetMapping("/getAll")
+    public ResponseEntity<List<FilialResponseDTO>> getAll() {
+        log.info("Get all filial:");
+        return ResponseEntity.ok(filialService.getAll());
+    }
 
 
 }

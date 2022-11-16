@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 public interface ProfileRepository extends JpaRepository<ProfileEntity, String> {
@@ -19,5 +20,7 @@ public interface ProfileRepository extends JpaRepository<ProfileEntity, String> 
     @Transactional
     @Query("update ProfileEntity set visible = ?2, deletedDate = ?3 where  id = ?1")
     void updateVisibleAndDeletedDate(String id, boolean b, LocalDateTime time);
+
+    List<ProfileEntity> findAllByFilialId(String filialId);
 
 }

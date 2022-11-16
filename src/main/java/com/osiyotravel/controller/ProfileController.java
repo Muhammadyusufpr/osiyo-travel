@@ -2,6 +2,8 @@ package com.osiyotravel.controller;
 
 import com.osiyotravel.dto.deatil.ApiResponse;
 import com.osiyotravel.dto.request.ProfileCreateDTO;
+import com.osiyotravel.dto.response.FilialResponseDTO;
+import com.osiyotravel.dto.response.ProfileResDTO;
 import com.osiyotravel.dto.update.ProfileUpdateDTO;
 import com.osiyotravel.service.ProfileService;
 import io.swagger.annotations.Api;
@@ -13,6 +15,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/profile")
@@ -53,6 +56,14 @@ public class ProfileController {
     public ResponseEntity<Boolean> delete(@PathVariable String id) {
         log.info("Delete profile:{}", id);
         return ResponseEntity.ok(profileService.delete(id));
+    }
+
+    @ApiOperation(value = "GetAll", notes = "Method used for get all profiles only can ROLE_ADMIN")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @GetMapping("/getAll")
+    public ResponseEntity<List<ProfileResDTO>> getAll() {
+        log.info("Get all profiles:");
+        return ResponseEntity.ok(profileService.getAll());
     }
 
 
