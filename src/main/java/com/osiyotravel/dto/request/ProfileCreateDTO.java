@@ -15,11 +15,11 @@ import javax.validation.constraints.NotNull;
 public class ProfileCreateDTO {
 
     @NotBlank(message = "Username is required!")
-    @Length(min = 2,message = "Username size min 3 !")
+    @Length(min = 2, message = "Username size min 3 !")
     private String username;
 
     @NotBlank(message = "Password is required!")
-    @Length(min = 4,message = "Username size min 3 !")
+    @Length(min = 4, message = "Username size min 3 !")
     private String password;
 
     @NotBlank(message = "Contact is required!")
@@ -27,6 +27,9 @@ public class ProfileCreateDTO {
 
     @NotNull(message = "full name not be null")
     private String fullName;
+
+    @NotNull(message = "filialId not be null")
+    private String filialId;
 
     private ProfileRole role;
 

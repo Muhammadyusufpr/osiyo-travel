@@ -37,6 +37,7 @@ public class ProfileService {
 
         entity.setUsername(dto.getUsername());
         entity.setPhone(dto.getPhone());
+        entity.setFilialId(dto.getFilialId());
         entity.setPassword(dto.getPassword());
         entity.setRole(ProfileRole.ROLE_MANAGER);
         profileRepository.save(entity);
@@ -102,6 +103,7 @@ public class ProfileService {
 
         entity.setUsername(dto.getUsername());
         entity.setPhone(dto.getPhone());
+        entity.setFilialId(dto.getFilialId());
         profileRepository.save(entity);
         return new ApiResponse<>("Success!", 200, false);
     }

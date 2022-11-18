@@ -20,6 +20,6 @@ public interface FilialRepository extends JpaRepository<FilialEntity, String> {
     @Query("update FilialEntity set visible = ?2, deletedDate = ?3 where  id = ?1")
     void updateVisibleAndDeletedDate(String id, boolean b, LocalDateTime time);
 
-    List<FilialEntity> findAllByOwnerId(String ownerId);
+    List<FilialEntity> findAllByOwnerIdAndVisibleTrue(String ownerId);
 
 }

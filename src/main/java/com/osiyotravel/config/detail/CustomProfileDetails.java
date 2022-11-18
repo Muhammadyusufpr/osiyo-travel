@@ -1,5 +1,7 @@
 package com.osiyotravel.config.detail;
 
+import com.osiyotravel.dto.deatil.CurrentFilial;
+import com.osiyotravel.entity.FilialEntity;
 import com.osiyotravel.enums.ProfileRole;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -8,6 +10,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class CustomProfileDetails implements UserDetails {
 
@@ -19,11 +23,14 @@ public class CustomProfileDetails implements UserDetails {
 
     private String phone;
 
-    public CustomProfileDetails(String id, ProfileRole role, String username, String phone) {
+    private FilialEntity filial;
+
+    public CustomProfileDetails(String id, ProfileRole role, String username, String phone,FilialEntity filial) {
         this.id = id;
         this.role = role;
         this.username = username;
         this.phone = phone;
+        this.filial = filial;
     }
 
     @Override
@@ -74,5 +81,9 @@ public class CustomProfileDetails implements UserDetails {
 
     public String getPhone() {
         return phone;
+    }
+
+    public FilialEntity getFilial() {
+        return filial;
     }
 }

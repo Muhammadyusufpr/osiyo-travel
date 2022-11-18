@@ -6,7 +6,6 @@ import com.osiyotravel.dto.request.FilialRequestDTO;
 import com.osiyotravel.dto.response.FilialResponseDTO;
 import com.osiyotravel.entity.FilialEntity;
 import com.osiyotravel.enums.FilialStatus;
-import com.osiyotravel.exception.ItemNotFoundException;
 import com.osiyotravel.repository.FilialRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -93,7 +92,7 @@ public class FilialService {
 
 
     public ApiResponse<List<FilialResponseDTO>> getAll() {
-        List<FilialResponseDTO> list = filialRepository.findAllByOwnerId(EntityDetails.getId()).stream().map(this::toDTO).toList();
+        List<FilialResponseDTO> list = filialRepository.findAllByOwnerIdAndVisibleTrue(EntityDetails.getId()).stream().map(this::toDTO).toList();
         return new ApiResponse<>("Success!", 200, false, list);
     }
 

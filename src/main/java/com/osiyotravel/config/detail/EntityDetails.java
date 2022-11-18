@@ -13,6 +13,9 @@ public class EntityDetails {
         return (CustomProfileDetails) authentication.getPrincipal();
     }
 
+    public static String getFilialId(){
+        return getEntity().getFilial().getId();}
+
     public static String getUsernameEmployee() {
         return getEntity().getUsername();
     }

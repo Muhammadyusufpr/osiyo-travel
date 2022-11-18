@@ -24,12 +24,25 @@ public class ClientEntity extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private Gender gender;
 
-
     @Column(name = "attach_id")
     private String attachId;
     @JoinColumn(name = "attach_id", insertable = false, updatable = false)
     @ManyToOne(fetch = FetchType.LAZY)
     private AttachEntity attach;
 
+    @Column(name = "filial_id")
+    private String filialId;
+    @JoinColumn(name = "filial_id", insertable = false, updatable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    private FilialEntity filial;
+
+    @Column
+    private String price;
+
+    @Column
+    private String flight; //рейс
+
+    @Column
+    private String airPlane;
 
 }

@@ -1,6 +1,8 @@
 package com.osiyotravel.service;
 
+import com.osiyotravel.config.detail.CustomProfileDetailsService;
 import com.osiyotravel.dto.deatil.ApiResponse;
+import com.osiyotravel.dto.deatil.CurrentFilial;
 import com.osiyotravel.dto.deatil.JwtDTO;
 import com.osiyotravel.dto.request.ProfileAuthDTO;
 import com.osiyotravel.dto.response.ProfileResDTO;
@@ -11,6 +13,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.Map;
 import java.util.Optional;
 
 
@@ -20,6 +24,7 @@ import java.util.Optional;
 public class AuthService {
     private final PasswordEncoder passwordEncoder;
     private final ProfileRepository employeeRepository;
+    private final CustomProfileDetailsService customProfileDetailsService;
 
 
     public ApiResponse<ProfileResDTO> login(ProfileAuthDTO dto) {
@@ -40,6 +45,12 @@ public class AuthService {
             return new ApiResponse<>("Phone number Or Password wrong!", 400, true);
         }
 
+        Map<String, CurrentFilial> filialMap = customProfileDetailsService.getFilialMap();
+        CurrentFilial currentFilial = new CurrentFilial();
+        currentFilial.setFilial(profileEntity.getFilial());
+        filialMap.put(dto.getUsername(),currentFilial);
+        customProfileDetailsService.loadUserByUsername(dto.getUsername());
+
         ProfileResDTO profile = new ProfileResDTO();
         profile.setUsername(profileEntity.getUsername());
         profile.setPhone(profileEntity.getPhone());
@@ -52,6 +63,7 @@ public class AuthService {
                 .profileRole(profileEntity.getRole())
                 .username(profileEntity.getUsername()).build();
         profile.setAccessToken(JwtUtil.encode(jwtDTO,30));
+
         return new ApiResponse<>("Success!", 200, false, profile);
     }
 
