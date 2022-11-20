@@ -1,14 +1,16 @@
 package com.osiyotravel.entity;
 
 import com.osiyotravel.enums.ProfileRole;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Setter
 @Getter
 @Entity
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "profile")
 public class ProfileEntity extends BaseEntity {
     @Column

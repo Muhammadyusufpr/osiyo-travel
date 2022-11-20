@@ -39,7 +39,7 @@ public class ProfileService {
         entity.setPhone(dto.getPhone());
         entity.setFilialId(dto.getFilialId());
         entity.setPassword(dto.getPassword());
-        entity.setRole(ProfileRole.ROLE_MANAGER);
+        entity.setRole(dto.getRole());
         profileRepository.save(entity);
         return new ApiResponse<>("Success!", 200, false);
     }
@@ -93,9 +93,7 @@ public class ProfileService {
             return new ApiResponse<>("Username all ready Exists!", 400, true);
         }
 
-
         ProfileEntity entity = get(id);
-
         if (entity == null) {
             log.info("Profile not found!");
             return new ApiResponse<>("Profile not found!", 400, true);

@@ -1,14 +1,16 @@
 package com.osiyotravel.entity;
 
 import com.osiyotravel.enums.Gender;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Setter
 @Getter
 @Entity
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "client")
 public class ClientEntity extends BaseEntity {
     @Column
