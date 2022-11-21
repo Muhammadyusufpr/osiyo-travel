@@ -14,6 +14,7 @@ import java.util.Optional;
 public interface ProfileRepository extends JpaRepository<ProfileEntity, String> {
 
     Optional<ProfileEntity> findByUsernameAndVisibleTrue(String username);
+
     Optional<ProfileEntity> findByIdAndVisibleTrue(String id);
 
 
@@ -22,7 +23,10 @@ public interface ProfileRepository extends JpaRepository<ProfileEntity, String> 
     @Query("update ProfileEntity set visible = ?2, deletedDate = ?3 where  id = ?1")
     void updateVisibleAndDeletedDate(String id, boolean b, LocalDateTime time);
 
-    List<ProfileEntity> findAllByFilialIdAndRole(String filialId, ProfileRole role);
+//    @Query("select count(p.id) from ProfileEntity as p  where p.visible = true and p.deletedDate is null")
+    List<ProfileEntity> findAllByVisibleTrue();
+
+    List<ProfileEntity> findByFilialIdAndRoleAndVisibleTrue(String filialId, ProfileRole role);
 
 
 }

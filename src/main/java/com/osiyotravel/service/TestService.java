@@ -45,8 +45,6 @@ public class TestService {
                 .phone("+998896954875")
                 .gender(Gender.MALE)
                 .price("1750")
-                .airPlane("A234")
-                .flight("H43")
                 .build();
 
         clientRepository.save(client);

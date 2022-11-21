@@ -9,5 +9,11 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiUk9MRV9BRE1JTiIsInBob25lI
   "phone": "+998930047135"
 }
 
+###
+GET http://localhost:8080/api/v1/profile/get-count
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiUk9MRV9TVVBFUl9BRE1JTiIsInBob25lIjoiYWRtaW4iLCJpc3MiOiJQZXJmZXR0byIsImlkIjoiMTIiLCJleHAiOjE2NzE2MDYyMDcsInVzZXJuYW1lIjoiYWRtaW4ifQ.uO6u6IZCXUt41pTiB8xpZXcfWN28LxskAvuk6xAOcw4
+
+
 
 

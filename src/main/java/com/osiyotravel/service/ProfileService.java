@@ -4,6 +4,7 @@ import com.osiyotravel.config.detail.EntityDetails;
 import com.osiyotravel.dto.deatil.ApiResponse;
 import com.osiyotravel.dto.request.ProfileCreateDTO;
 import com.osiyotravel.dto.request.ProfileDTOForSuperAdmin;
+import com.osiyotravel.dto.response.ProfileCountDTO;
 import com.osiyotravel.dto.response.ProfileResDTO;
 import com.osiyotravel.dto.update.ProfileUpdateDTO;
 import com.osiyotravel.entity.ProfileEntity;
@@ -12,6 +13,7 @@ import com.osiyotravel.exception.ItemNotFoundException;
 import com.osiyotravel.repository.ProfileRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -23,6 +25,8 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class ProfileService {
     private final ProfileRepository profileRepository;
+    private final PasswordEncoder passwordEncoder;
+    private final ClientService clientService;
 
 
     public ApiResponse<?> create(ProfileCreateDTO dto) {
@@ -38,8 +42,11 @@ public class ProfileService {
         entity.setUsername(dto.getUsername());
         entity.setPhone(dto.getPhone());
         entity.setFilialId(dto.getFilialId());
+        // TODO: 21.11.2022 change
+//        entity.setPassword(passwordEncoder.encode(dto.getPassword()));
         entity.setPassword(dto.getPassword());
         entity.setRole(dto.getRole());
+        entity.setFullName(dto.getFullName());
         profileRepository.save(entity);
         return new ApiResponse<>("Success!", 200, false);
     }
@@ -78,32 +85,51 @@ public class ProfileService {
         dto.setId(entity.getId());
         dto.setCreatedDate(entity.getCreatedDate());
         dto.setRole(entity.getRole());
+        dto.setFullName(entity.getFullName());
         dto.setPhone(entity.getPhone());
+        dto.setPassword(entity.getPassword());
         dto.setUsername(entity.getUsername());
         dto.setFilialId(entity.getFilialId());
         return dto;
     }
 
     public ApiResponse<?> update(ProfileUpdateDTO dto, String id) {
+        ProfileEntity entity = get(id);
         Optional<ProfileEntity> employee = profileRepository
                 .findByUsernameAndVisibleTrue(dto.getUsername());
 
-        if (employee.isPresent()) {
+        if (employee.isPresent() && !entity.getUsername().equals(employee.get().getUsername())) {
             log.warn("Username all ready Exists! username = {}", dto.getUsername());
             return new ApiResponse<>("Username all ready Exists!", 400, true);
         }
 
-        ProfileEntity entity = get(id);
-        if (entity == null) {
-            log.info("Profile not found!");
-            return new ApiResponse<>("Profile not found!", 400, true);
-        }
 
         entity.setUsername(dto.getUsername());
         entity.setPhone(dto.getPhone());
+        entity.setFullName(dto.getFullName());
         entity.setFilialId(dto.getFilialId());
         profileRepository.save(entity);
         return new ApiResponse<>("Success!", 200, false);
+    }
+
+    public ApiResponse<?> getCountProfile() {
+        List<ProfileEntity> list = profileRepository.findAllByVisibleTrue();
+        Integer adminCount = 0;
+        Integer managerCount = 0;
+        ProfileCountDTO dto = new ProfileCountDTO();
+
+        for (ProfileEntity entity : list) {
+            if (entity.getRole().equals(ProfileRole.ROLE_ADMIN)) {
+                adminCount++;
+            } else if (entity.getRole().equals(ProfileRole.ROLE_MANAGER)) {
+                managerCount++;
+            }
+        }
+        Integer count = clientService.getCount();
+        dto.setManagerCount(managerCount);
+        dto.setAdminCount(adminCount);
+        dto.setClientCount(count);
+        return new ApiResponse<>("Success!", 200, false, dto);
     }
 
 
@@ -120,8 +146,8 @@ public class ProfileService {
 
 
     public ApiResponse<List<ProfileResDTO>> getAll(ProfileDTOForSuperAdmin dto) {
-        List<ProfileResDTO> list = profileRepository.findAllByFilialIdAndRole(EntityDetails.getId(),
-                dto.getRole()).stream().map(this::toDTO).toList();
+        List<ProfileResDTO> list = profileRepository.findByFilialIdAndRoleAndVisibleTrue(
+                EntityDetails.getFilialId(), dto.getRole()).stream().map(this::toDTO).toList();
         return new ApiResponse<>("Success!", 200, false, list);
     }
 

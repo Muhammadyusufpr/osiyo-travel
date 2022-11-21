@@ -36,7 +36,7 @@ public class ProfileController {
     }
 
     @ApiOperation(value = "Get", notes = "Method used for get profile by id")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_SUPER_ADMIN','ROLE_ADMIN')")
     @GetMapping("/{id}")
     public ResponseEntity<?> getById(@PathVariable String id) {
         log.info("Get Profile:{}", id);
@@ -52,7 +52,7 @@ public class ProfileController {
     }
 
     @ApiOperation(value = "Update", notes = "Method used for update profile detail")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_SUPER_ADMIN','ROLE_ADMIN')")
     @PutMapping("/{id}")
     public ResponseEntity<?> update(@PathVariable String id, @RequestBody ProfileUpdateDTO dto) {
         log.info("Update profile detail:{}{}", id, dto);
@@ -60,7 +60,7 @@ public class ProfileController {
     }
 
     @ApiOperation(value = "Delete", notes = "Method used for delete profile by id")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_SUPER_ADMIN','ROLE_ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<Boolean> delete(@PathVariable String id) {
         log.info("Delete profile:{}", id);
@@ -76,4 +76,11 @@ public class ProfileController {
     }
 
 
+    @ApiOperation(value = "GetCount", notes = "Method used for get count profiles ROLE_ADMIN, ROLE_SUPER_ADMIN")
+    @PreAuthorize("hasAnyRole('ROLE_SUPER_ADMIN','ROLE_ADMIN')")
+    @GetMapping("/count")
+    public ResponseEntity<?> getCount() {
+        log.info("Get count");
+        return ResponseEntity.ok(profileService.getCountProfile());
+    }
 }

@@ -41,10 +41,10 @@ public class ClientEntity extends BaseEntity {
     @Column
     private String price;
 
-    @Column
+    /*@Column
     private String flight; //рейс
 
     @Column
-    private String airPlane;
+    private String airPlane;*/
 
 }

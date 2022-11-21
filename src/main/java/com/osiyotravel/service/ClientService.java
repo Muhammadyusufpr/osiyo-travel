@@ -31,8 +31,6 @@ public class ClientService {
         entity.setGender(dto.getGender());
         entity.setAttachId(dto.getAttachId());
         entity.setPrice(dto.getPrice());
-        entity.setFlight(dto.getFlight());
-        entity.setAirPlane(dto.getAirPlane());
         entity.setFilialId(EntityDetails.getFilialId());
         clientRepository.save(entity);
         return new ApiResponse<>("Success!", 200, false);
@@ -54,8 +52,6 @@ public class ClientService {
         dto.setGender(entity.getGender());
         dto.setAttachId(entity.getAttachId());
         dto.setPrice(entity.getPrice());
-        dto.setFlight(entity.getFlight());
-        dto.setAirPlane(entity.getAirPlane());
         return dto;
     }
 
@@ -78,8 +74,6 @@ public class ClientService {
         entity.setGender(dto.getGender());
         entity.setAttachId(dto.getAttachId());
         entity.setPrice(dto.getPrice());
-        entity.setFlight(dto.getFlight());
-        entity.setAirPlane(dto.getAirPlane());
         entity.setFilialId(EntityDetails.getFilialId());
         clientRepository.save(entity);
         return new ApiResponse<>("Success!", 200, false);
@@ -96,5 +90,15 @@ public class ClientService {
         return new ApiResponse<>("Success!", 200, false, list);
     }
 
+
+    public Integer getCount() {
+        Optional<Integer> count = clientRepository.getCount();
+
+        if (count.isEmpty()) {
+            log.info("Client count not found!");
+            return null;
+        }
+        return count.get();
+    }
 
 }

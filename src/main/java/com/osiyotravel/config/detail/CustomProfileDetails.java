@@ -2,7 +2,11 @@ package com.osiyotravel.config.detail;
 
 import com.osiyotravel.dto.deatil.CurrentFilial;
 import com.osiyotravel.entity.FilialEntity;
+import com.osiyotravel.entity.ProfileEntity;
 import com.osiyotravel.enums.ProfileRole;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

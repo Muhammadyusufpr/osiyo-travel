@@ -35,17 +35,13 @@ public class CustomProfileDetailsService implements UserDetailsService {
         CustomProfileDetails details = null;
 
         if(profileEntity != null){
-            FilialEntity filial = new FilialEntity();
-            if (filialMap.containsKey(username)) {
-                filial = filialMap.get(username).getFilial();
-            }
             details = new CustomProfileDetails
                     (
                             profileEntity.getId(),
                             profileEntity.getRole(),
                             profileEntity.getUsername(),
                             profileEntity.getPhone(),
-                            filial
+                            profileEntity.getFilial()
                     );
         }
         assert details != null;

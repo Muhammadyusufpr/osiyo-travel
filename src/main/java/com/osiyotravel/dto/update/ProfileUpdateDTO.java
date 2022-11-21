@@ -20,6 +20,9 @@ public class ProfileUpdateDTO {
     @NotBlank(message = "Phone is required!")
     private String phone;
 
-    @NotNull(message = "full name not be null")
+    @NotNull(message = "filialId name not be null")
     private String filialId;
+
+    @NotNull(message = "full name name not be null")
+    private String fullName;
 }

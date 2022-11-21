@@ -32,7 +32,7 @@ public class ProfileEntity extends BaseEntity {
     @Column(name = "filial_id")
     private String filialId;
     @JoinColumn(name = "filial_id", insertable = false, updatable = false)
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private FilialEntity filial;
 
 
