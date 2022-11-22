@@ -27,6 +27,7 @@ public interface ProfileRepository extends JpaRepository<ProfileEntity, String> 
     List<ProfileEntity> findAllByVisibleTrue();
 
     List<ProfileEntity> findByFilialIdAndRoleAndVisibleTrue(String filialId, ProfileRole role);
+    List<ProfileEntity> findByRoleAndVisibleTrue(ProfileRole role);
 
 
 }

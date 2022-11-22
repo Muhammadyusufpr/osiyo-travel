@@ -146,8 +146,13 @@ public class ProfileService {
 
 
     public ApiResponse<List<ProfileResDTO>> getAll(ProfileDTOForSuperAdmin dto) {
-        List<ProfileResDTO> list = profileRepository.findByFilialIdAndRoleAndVisibleTrue(
-                EntityDetails.getFilialId(), dto.getRole()).stream().map(this::toDTO).toList();
+        List<ProfileResDTO> list = null;
+        if (dto.getRole().equals(ProfileRole.ROLE_SUPER_ADMIN)) {
+            list = profileRepository.findByRoleAndVisibleTrue(dto.getRole()).stream().map(this::toDTO).toList();
+        } else {
+            list = profileRepository.findByFilialIdAndRoleAndVisibleTrue(
+                    EntityDetails.getFilialId(), dto.getRole()).stream().map(this::toDTO).toList();
+        }
         return new ApiResponse<>("Success!", 200, false, list);
     }
 

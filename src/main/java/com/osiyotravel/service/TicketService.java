@@ -1,6 +1,5 @@
 package com.osiyotravel.service;
 
-import com.osiyotravel.config.detail.EntityDetails;
 import com.osiyotravel.dto.deatil.ApiResponse;
 import com.osiyotravel.dto.request.TicketRequestDTO;
 import com.osiyotravel.dto.response.TicketResponseDTO;
@@ -30,15 +29,16 @@ public class TicketService {
         TicketEntity entity = new TicketEntity();
 
         entity.setName(dto.getName());
-        entity.setFlight(dto.getFlight());
+        entity.setFlightEntityList(dto.getFlightList());
         entity.setFlightTime(dto.getFlightTime());
         entity.setAirPlane(dto.getAirPlane());
         entity.setSeat(dto.getSeat());
-        entity.setFrom(dto.getFrom());
-        entity.setTo(dto.getTo());
+        entity.setFromCountry(dto.getFromCountry());
+        entity.setToCountry(dto.getToCountry());
         entity.setClientId(dto.getClientId());
         entity.setClientName(dto.getClientName());
         entity.setAirplaneType(dto.getAirplaneType());
+        entity.setEndTime(dto.getEndTime());
         ticketRepository.save(entity);
         return new ApiResponse<>("Success!", 200, false);
     }
@@ -64,16 +64,17 @@ public class TicketService {
         TicketResponseDTO dto = new TicketResponseDTO();
         dto.setId(entity.getId());
         dto.setName(entity.getName());
-        dto.setFlight(entity.getFlight());
         dto.setFlightTime(entity.getFlightTime());
         dto.setAirPlane(entity.getAirPlane());
         dto.setSeat(entity.getSeat());
-        dto.setFrom(entity.getFrom());
-        dto.setTo(entity.getTo());
+        dto.setFlightList(entity.getFlightEntityList());
+        dto.setFromCountry(entity.getFromCountry());
+        dto.setToCountry(entity.getToCountry());
         dto.setClientId(entity.getClientId());
         dto.setClientName(entity.getClientName());
         dto.setAirplaneType(entity.getAirplaneType());
         dto.setCreatedDate(entity.getCreatedDate());
+        dto.setEndTime(entity.getEndTime());
         return dto;
     }
 
@@ -82,15 +83,16 @@ public class TicketService {
         TicketEntity entity = get(id);
 
         entity.setName(dto.getName());
-        entity.setFlight(dto.getFlight());
         entity.setFlightTime(dto.getFlightTime());
         entity.setAirPlane(dto.getAirPlane());
         entity.setSeat(dto.getSeat());
-        entity.setFrom(dto.getFrom());
-        entity.setTo(dto.getTo());
+        entity.setFromCountry(dto.getFromCountry());
+        entity.setToCountry(dto.getToCountry());
         entity.setClientId(dto.getClientId());
         entity.setClientName(dto.getClientName());
+        entity.setFlightEntityList(dto.getFlightList());
         entity.setAirplaneType(dto.getAirplaneType());
+        entity.setEndTime(dto.getEndTime());
         ticketRepository.save(entity);
         return new ApiResponse<>("Success!", 200, false);
     }
@@ -103,7 +105,7 @@ public class TicketService {
 
     public ApiResponse<List<TicketResponseDTO>> getAll() {
         List<TicketResponseDTO> list = ticketRepository.
-                findAllByVisibleTrueAndDeletedDateIsNull().stream().map(this::toDTO).toList();
+                findAllByVisibleTrue().stream().map(this::toDTO).toList();
         return new ApiResponse<>("Success!", 200, false, list);
     }
 

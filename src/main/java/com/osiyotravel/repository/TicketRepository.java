@@ -17,5 +17,5 @@ public interface TicketRepository extends JpaRepository<TicketEntity, String> {
     @Query("update TicketEntity set visible = ?2, deletedDate = ?3 where  id = ?1")
     void updateVisibleAndDeletedDate(String id, boolean b, LocalDateTime time);
 
-    List<TicketEntity> findAllByVisibleTrueAndDeletedDateIsNull();
+    List<TicketEntity> findAllByVisibleTrue();
 }

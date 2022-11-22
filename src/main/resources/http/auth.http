@@ -3,6 +3,6 @@ POST http://localhost:8080/api/v1/auth/profile/login
 Content-Type: application/json
 
 {
-  "username": "admin",
-  "password": "12345"
+  "username": "adminjon",
+  "password": "123456"
 }

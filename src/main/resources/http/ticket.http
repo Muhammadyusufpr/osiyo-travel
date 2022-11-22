@@ -1,0 +1,25 @@
+###
+POST http://localhost:8080/api/v1/ticket
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiUk9MRV9NQU5BR0VSIiwicGhvbmUiOiJhZG1pbmpvbiIsImlzcyI6IlBlcmZldHRvIiwiaWQiOiI0MDI4ODAwODg0OGFmNTJiMDE4NDhhZjcxZjRmMDAwMCIsImV4cCI6MTY3MTcwMzQwNywidXNlcm5hbWUiOiJhZG1pbmpvbiJ9.apYXMOwQ1NdMBy6KVwWxRvrBtc4oWK2zxL5dLz0w7xQ
+
+{
+  "name": "uzb avia",
+  "clientId": "402880e48494e7d8018494e8631f0000",
+  "flightList": [
+    "Uzbekistan",
+    "Madina"
+  ],
+  "flightTime": "2022-11-22T10:05:20.286Z",
+  "airPlane": "Mazgi",
+  "seat": "6A",
+  "fromCountry": "Uzbekistan",
+  "toCountry": "Madina",
+  "airplaneType": "ECONOM",
+  "clientName": "Ali alieyv",
+  "endTime": "2022-11-22T10:05:20.286Z"
+}
+
+###
+GET http://localhost:8080/api/v1/ticket/getAll
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiUk9MRV9NQU5BR0VSIiwicGhvbmUiOiJhZG1pbmpvbiIsImlzcyI6IlBlcmZldHRvIiwiaWQiOiI0MDI4ODAwODg0OGFmNTJiMDE4NDhhZjcxZjRmMDAwMCIsImV4cCI6MTY3MTcwMzQwNywidXNlcm5hbWUiOiJhZG1pbmpvbiJ9.apYXMOwQ1NdMBy6KVwWxRvrBtc4oWK2zxL5dLz0w7xQ
