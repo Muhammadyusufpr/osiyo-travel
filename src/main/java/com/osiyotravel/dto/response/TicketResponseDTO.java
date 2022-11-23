@@ -13,4 +13,6 @@ import java.time.LocalDateTime;
 public class TicketResponseDTO extends TicketRequestDTO {
     private String id;
     private LocalDateTime createdDate;
+    private String clientId;
+    private String clientName;
 }

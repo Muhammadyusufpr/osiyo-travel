@@ -11,15 +11,14 @@ import java.util.List;
 @Setter
 @Getter
 public class TicketRequestDTO {
+    private String id;
     private String name;
     private List<FlightEntity> flightList;
-    private String clientName;
     private LocalDateTime flightTime;
     private String airPlane;
     private String seat;
     private String fromCountry;
     private String toCountry;
-    private String clientId;
     private AirplaneType airplaneType;
     private LocalDateTime endTime;
 }

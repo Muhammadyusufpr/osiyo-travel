@@ -23,8 +23,8 @@ public class TicketService {
     private final ClientService clientService;
 
 
-    public ApiResponse<?> create(TicketRequestDTO dto) {
-        ClientEntity client = clientService.get(dto.getClientId());
+    public ApiResponse<?> create(TicketRequestDTO dto, String clientId, String clientName) {
+        ClientEntity client = clientService.get(clientId);
 
         TicketEntity entity = new TicketEntity();
 
@@ -35,8 +35,8 @@ public class TicketService {
         entity.setSeat(dto.getSeat());
         entity.setFromCountry(dto.getFromCountry());
         entity.setToCountry(dto.getToCountry());
-        entity.setClientId(dto.getClientId());
-        entity.setClientName(dto.getClientName());
+        entity.setClientId(clientId);
+        entity.setClientName(clientName);
         entity.setAirplaneType(dto.getAirplaneType());
         entity.setEndTime(dto.getEndTime());
         ticketRepository.save(entity);
@@ -79,7 +79,8 @@ public class TicketService {
     }
 
 
-    public ApiResponse<?> update(String id, TicketRequestDTO dto) {
+    public ApiResponse<?> update(String id, TicketRequestDTO dto, String clientId, String clientName) {
+        ClientEntity client = clientService.get(clientId);
         TicketEntity entity = get(id);
 
         entity.setName(dto.getName());
@@ -88,8 +89,8 @@ public class TicketService {
         entity.setSeat(dto.getSeat());
         entity.setFromCountry(dto.getFromCountry());
         entity.setToCountry(dto.getToCountry());
-        entity.setClientId(dto.getClientId());
-        entity.setClientName(dto.getClientName());
+        entity.setClientId(clientId);
+        entity.setClientName(clientName);
         entity.setFlightEntityList(dto.getFlightList());
         entity.setAirplaneType(dto.getAirplaneType());
         entity.setEndTime(dto.getEndTime());

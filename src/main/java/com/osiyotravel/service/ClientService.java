@@ -1,14 +1,21 @@
 package com.osiyotravel.service;
 
 import com.osiyotravel.config.detail.EntityDetails;
+import com.osiyotravel.dto.ClientAttachDTO;
 import com.osiyotravel.dto.deatil.ApiResponse;
+import com.osiyotravel.dto.request.ClientFilterDTO;
 import com.osiyotravel.dto.request.ClientRequestDTO;
+import com.osiyotravel.dto.response.ClientPaginationDTO;
 import com.osiyotravel.dto.response.ClientResponseDTO;
 import com.osiyotravel.entity.ClientEntity;
 import com.osiyotravel.exception.ItemNotFoundException;
+import com.osiyotravel.mapper.ClientMapperDTO;
 import com.osiyotravel.repository.ClientRepository;
+import com.osiyotravel.repository.filter.ClientFilterRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -20,9 +27,11 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class ClientService {
     private final ClientRepository clientRepository;
+    private final ClientFilterRepository clientFilterRepository;
+    private final AttachService attachService;
+    private final TicketService ticketService;
 
     public ApiResponse<?> create(ClientRequestDTO dto) {
-
         ClientEntity entity = new ClientEntity();
 
         entity.setName(dto.getName());
@@ -33,6 +42,7 @@ public class ClientService {
         entity.setPrice(dto.getPrice());
         entity.setFilialId(EntityDetails.getFilialId());
         clientRepository.save(entity);
+        ticketService.create(dto.getTicket(), entity.getId(), entity.getName());
         return new ApiResponse<>("Success!", 200, false);
     }
 
@@ -76,12 +86,14 @@ public class ClientService {
         entity.setPrice(dto.getPrice());
         entity.setFilialId(EntityDetails.getFilialId());
         clientRepository.save(entity);
+        ticketService.update(dto.getTicket().getId(), dto.getTicket(), entity.getId(), entity.getName());
         return new ApiResponse<>("Success!", 200, false);
     }
 
     public ApiResponse<Boolean> delete(String id) {
         ClientEntity entity = get(id);
         clientRepository.updateVisibleAndDeletedDate(id, false, LocalDateTime.now());
+        ticketService.delete(id);
         return new ApiResponse<>("Success!", 200, false);
     }
 
@@ -89,7 +101,6 @@ public class ClientService {
         List<ClientResponseDTO> list = clientRepository.findAllByFilialIdAndVisibleTrue(EntityDetails.getFilialId()).stream().map(this::toDTO).toList();
         return new ApiResponse<>("Success!", 200, false, list);
     }
-
 
     public Integer getCount() {
         Optional<Integer> count = clientRepository.getCount();
@@ -101,4 +112,17 @@ public class ClientService {
         return count.get();
     }
 
+    public ApiResponse<ClientPaginationDTO> filter(ClientFilterDTO dto, int page, int size) {
+        ClientMapperDTO filter = clientFilterRepository.filter(dto, page, size);
+        List<ClientMapperDTO> list = filter.getList();
+
+        for (ClientMapperDTO mapperDTO : list) {
+            mapperDTO.setAttachDTO(new ClientAttachDTO(mapperDTO.getAttachId(),
+                    attachService.toOpenURL(mapperDTO.getAttachId())));
+        }
+        PageImpl<ClientMapperDTO> dtos = new PageImpl<>(list, PageRequest.of(page, size), filter.getTotalElement());
+        return new ApiResponse<>("Success!", 200, false,
+                new ClientPaginationDTO(list, dtos.getTotalPages(), filter.getTotalElement()));
+
+    }
 }

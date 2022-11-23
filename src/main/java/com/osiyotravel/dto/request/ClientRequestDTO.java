@@ -15,4 +15,5 @@ public class ClientRequestDTO {
     private String price;
     private String flight; //рейс
     private String airPlane;
+    private TicketRequestDTO ticket;
 }

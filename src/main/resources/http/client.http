@@ -1,0 +1,8 @@
+###
+POST http://localhost:8080/api/v1/client/filter
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiUk9MRV9NQU5BR0VSIiwicGhvbmUiOiJhZG1pbmpvbiIsImlzcyI6IlBlcmZldHRvIiwiaWQiOiI0MDI4ODAwODg0OGFmNTJiMDE4NDhhZjcxZjRmMDAwMCIsImV4cCI6MTY3MTc5NDAyNywidXNlcm5hbWUiOiJhZG1pbmpvbiJ9.tE3gFLsvhlhCRe4jHmVmOpw4is3WJCsIkBRxq8osuNo
+
+{
+  "text": "V"
+}

@@ -1,6 +1,7 @@
 package com.osiyotravel.controller;
 
 import com.osiyotravel.dto.deatil.ApiResponse;
+import com.osiyotravel.dto.request.ClientFilterDTO;
 import com.osiyotravel.dto.request.ClientRequestDTO;
 import com.osiyotravel.dto.response.ClientResponseDTO;
 import com.osiyotravel.service.ClientService;
@@ -58,12 +59,30 @@ public class ClientController {
     }
 
     @ApiOperation(value = "Create", notes = "Method used for create client from ROLE_MANAGER")
-    @PreAuthorize("hasRole('ROLE_MANAGER')")
-    @GetMapping("/getAll")
+    @PreAuthorize("hasAnyRole('ROLE_MANAGER','ROLE_SUPER_ADMIN','ROLE_ADMIN')")
+    @GetMapping("")
     public ResponseEntity<ApiResponse<List<ClientResponseDTO>>> getAll() {
         log.info("Get all clients");
         return ResponseEntity.ok(clientService.getAll());
     }
 
+   /* @ApiOperation(value = "Get", notes = "Method used for get pagination client from ROLE_MANAGER")
+    @PreAuthorize("hasAnyRole('ROLE_MANAGER','ROLE_SUPER_ADMIN','ROLE_ADMIN')")
+    @GetMapping("/get")
+    public ResponseEntity<?> getPagination(@RequestParam(value = "page", defaultValue = "0") int page,
+                                           @RequestParam(value = "size", defaultValue = "15") int size) {
+        log.info("Get client pagination:{}{}", page, size);
+        return ResponseEntity.ok(clientService.pagination(page, size));
+    }*/
 
+
+    @ApiOperation(value = "Get", notes = "Method used for filtring client")
+    @PreAuthorize("hasAnyRole('ROLE_MANAGER','ROLE_SUPER_ADMIN','ROLE_ADMIN')")
+    @PostMapping("/filter")
+    public ResponseEntity<?> filter(@RequestBody ClientFilterDTO dto,
+                                    @RequestParam(value = "page", defaultValue = "0") int page,
+                                    @RequestParam(value = "size", defaultValue = "15") int size) {
+        log.info("Client filter:{}{}{}", dto, page, size);
+        return ResponseEntity.ok(clientService.filter(dto, page, size));
+    }
 }

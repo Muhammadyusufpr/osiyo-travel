@@ -14,7 +14,7 @@ public interface TicketRepository extends JpaRepository<TicketEntity, String> {
 
     @Modifying
     @Transactional
-    @Query("update TicketEntity set visible = ?2, deletedDate = ?3 where  id = ?1")
+    @Query("update TicketEntity set visible = ?2, deletedDate = ?3 where  clientId = ?1")
     void updateVisibleAndDeletedDate(String id, boolean b, LocalDateTime time);
 
     List<TicketEntity> findAllByVisibleTrue();

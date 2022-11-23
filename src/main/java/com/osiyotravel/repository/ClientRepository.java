@@ -1,6 +1,8 @@
 package com.osiyotravel.repository;
 
 import com.osiyotravel.entity.ClientEntity;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -22,4 +24,6 @@ public interface ClientRepository extends JpaRepository<ClientEntity, String> {
 
     @Query("select  count(p.id)  from ClientEntity  as p where p.visible = true ")
     Optional<Integer> getCount();
+
+    Page<ClientEntity> findAllByVisibleTrue(PageRequest pageable);
 }
