@@ -135,11 +135,6 @@ public class ProfileService {
 
     public Boolean delete(String id) {
         ProfileEntity entity = get(id);
-
-        if (entity == null) {
-            log.info("Profile not found!{}", id);
-            return false;
-        }
         profileRepository.updateVisibleAndDeletedDate(id, false, LocalDateTime.now());
         return true;
     }

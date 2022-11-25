@@ -14,6 +14,8 @@ import com.osiyotravel.repository.ClientRepository;
 import com.osiyotravel.repository.filter.ClientFilterRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -29,7 +31,9 @@ public class ClientService {
     private final ClientRepository clientRepository;
     private final ClientFilterRepository clientFilterRepository;
     private final AttachService attachService;
-    private final TicketService ticketService;
+    @Autowired
+    @Lazy
+    private TicketService ticketService;
 
     public ApiResponse<?> create(ClientRequestDTO dto) {
         ClientEntity entity = new ClientEntity();
