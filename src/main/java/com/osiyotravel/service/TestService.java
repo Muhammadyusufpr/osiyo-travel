@@ -58,7 +58,7 @@ public class TestService {
                 .role(ProfileRole.ROLE_SUPER_ADMIN)
                 .phone("+998930047135")
                 .username("Ali")
-                .password("12345")
+                .password("$2a$10$LtqlnUofO.xA0RzxaXWRK.Xu.kdWlnInqJFcC2l5V50ur.uns0Pnq")
                 .build();
         profileRepository.save(profile);
         return profile.getId();
