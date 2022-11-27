@@ -43,8 +43,8 @@ public class ProfileService {
         entity.setPhone(dto.getPhone());
         entity.setFilialId(dto.getFilialId());
         // TODO: 21.11.2022 change
-//        entity.setPassword(passwordEncoder.encode(dto.getPassword()));
-        entity.setPassword(dto.getPassword());
+        entity.setPassword(passwordEncoder.encode(dto.getPassword()));
+//        entity.setPassword(dto.getPassword());
         entity.setRole(dto.getRole());
         entity.setFullName(dto.getFullName());
         profileRepository.save(entity);
