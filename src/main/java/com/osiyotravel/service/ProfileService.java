@@ -42,9 +42,8 @@ public class ProfileService {
         entity.setUsername(dto.getUsername());
         entity.setPhone(dto.getPhone());
         entity.setFilialId(dto.getFilialId());
-        // TODO: 21.11.2022 change
-//        entity.setPassword(passwordEncoder.encode(dto.getPassword()));
-        entity.setPassword(dto.getPassword());
+        entity.setPassword(passwordEncoder.encode(dto.getPassword()));
+//        entity.setPassword(dto.getPassword());
         entity.setRole(dto.getRole());
         entity.setFullName(dto.getFullName());
         profileRepository.save(entity);
@@ -142,7 +141,7 @@ public class ProfileService {
 
     public ApiResponse<List<ProfileResDTO>> getAll(ProfileDTOForSuperAdmin dto) {
         List<ProfileResDTO> list = null;
-        if (dto.getRole().equals(ProfileRole.ROLE_SUPER_ADMIN)) {
+        if (EntityDetails.getRole().equals(ProfileRole.ROLE_SUPER_ADMIN)) {
             list = profileRepository.findByRoleAndVisibleTrue(dto.getRole()).stream().map(this::toDTO).toList();
         } else {
             list = profileRepository.findByFilialIdAndRoleAndVisibleTrue(
