@@ -7,4 +7,5 @@ import lombok.Setter;
 @Getter
 public class ClientFilterDTO {
     private String text;
+    private String filialId;
 }

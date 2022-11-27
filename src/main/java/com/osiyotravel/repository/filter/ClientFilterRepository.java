@@ -27,7 +27,7 @@ public class ClientFilterRepository {
                 " inner join client.filial as fl " +
                 " where client.visible = true ";
 
-        StringBuilder countSql = new StringBuilder("select  count(client.id) " +
+        StringBuilder countSql = new StringBuilder("select count(client.id) " +
                 " from ClientEntity as client " +
                 " inner join client.filial as fl " +
                 "  where client.visible = true ");
@@ -45,29 +45,19 @@ public class ClientFilterRepository {
                 sqlQuery.append(" or client.phone like :text ");
                 countSql.append(" or client.phone like :text ");
                 param.put("text", "%".concat(dto.getText().concat("%")));
-                System.out.println("%".concat(dto.getText()));
-            }
-            /*if (Optional.ofNullable(dto.getSurname()).isPresent()) {
-                sqlQuery.append(" and client.surname = :surname");
-                countSql.append(" and client.surname = :surname");
-                param.put("surname", dto.getSurname());
             }
 
-            if (Optional.ofNullable(dto.getPhone()).isPresent()) {
-                sqlQuery.append(" and client.phone = :phone");
-                countSql.append(" and client.phone = :phone");
-                param.put("phone", dto.getPhone());
-            }*/
+            if (Optional.ofNullable(dto.getFilialId()).isPresent()){
+                sqlQuery.append(" and client.filialId = :filialId");
+                param.put("filialId",dto.getFilialId());
+            }
         }
-        System.out.println(sqlQuery.toString());
         Query query = entityManager.createQuery(sqlQuery.toString(), ClientMapperDTO.class);
         Query countQuery = entityManager.createQuery(countSql.toString(), Long.class);
-        System.out.println(param);
         query.setFirstResult(page * size);
         query.setMaxResults(size);
         param.forEach(query::setParameter);
         param.forEach(countQuery::setParameter);
-
 
         List<ClientMapperDTO> list = query.getResultList();
         return new ClientMapperDTO(list, (Long) countQuery.getResultList().get(0));

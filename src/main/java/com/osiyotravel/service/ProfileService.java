@@ -41,9 +41,12 @@ public class ProfileService {
 
         entity.setUsername(dto.getUsername());
         entity.setPhone(dto.getPhone());
-        entity.setFilialId(dto.getFilialId());
+        if (EntityDetails.getRole().equals(ProfileRole.ROLE_SUPER_ADMIN)) {
+            entity.setFilialId(dto.getFilialId());
+        } else {
+            entity.setFilialId(EntityDetails.getFilialId());
+        }
         entity.setPassword(passwordEncoder.encode(dto.getPassword()));
-//        entity.setPassword(dto.getPassword());
         entity.setRole(dto.getRole());
         entity.setFullName(dto.getFullName());
         profileRepository.save(entity);

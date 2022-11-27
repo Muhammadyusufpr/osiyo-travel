@@ -1,12 +1,17 @@
 ###
-POST http://localhost:8080/api/v1/profile
+POST http://5.180.182.235:8080/api/v1/profile
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiUk9MRV9BRE1JTiIsInBob25lIjoiYWRtaW4iLCJpc3MiOiJQZXJmZXR0byIsImlkIjoiMTIiLCJleHAiOjE2NzExMDY5MDcsInVzZXJuYW1lIjoiYWRtaW4ifQ.-7XbS2l315iwRciXdtF59RFIbckRB4vnoxKm4XIfw90
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiUk9MRV9TVVBFUl9BRE1JTiIsInBob25lIjoiQWxpIiwiaXNzIjoiUGVyZmV0dG8iLCJpZCI6IjAwMDAwMDAwODRiN2FlZGUwMTg0YjdiNzY1NGIwMDAxIiwiZXhwIjoxNjcyMTM4NDIzLCJ1c2VybmFtZSI6IkFsaSJ9.8tavj0Y5FGlBm7MFp-xZH0b-o0XuVThQp-D-fCUJyTw
 
 {
-  "username": "Muhammadyusuf",
-  "password": "12345",
-  "phone": "+998930047135"
+  "filialId"
+:
+"0000000084b7aede0184b7b765690002",
+"fullName": "Toshmatov",
+"password": "123466",
+"phone": "+998999631111",
+"role": "ROLE_ADMIN",
+"username": "bigman"
 }
 
 ###

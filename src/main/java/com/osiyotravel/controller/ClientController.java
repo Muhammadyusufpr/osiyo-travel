@@ -33,7 +33,7 @@ public class ClientController {
         return ResponseEntity.ok(clientService.create(dto));
     }
 
-    @ApiOperation(value = "Create", notes = "Method used for create client from ROLE_MANAGER")
+    @ApiOperation(value = "Create", notes = "Method used for get client by id from ROLE_MANAGER")
     @PreAuthorize("hasRole('ROLE_MANAGER')")
     @GetMapping("/{id}")
     public ResponseEntity<?> getById(@PathVariable String id) {
@@ -41,8 +41,16 @@ public class ClientController {
         return ResponseEntity.ok(clientService.getById(id));
     }
 
+    @ApiOperation(value = "Create", notes = "Method used for get client info from ROLE_MANAGER")
+    @PreAuthorize("hasRole('ROLE_MANAGER')")
+    @GetMapping("/getInfo/{id}")
+    public ResponseEntity<?> getInfo(@PathVariable String id) {
+        log.info("Get Client!:{}", id);
+        return ResponseEntity.ok(clientService.getInfo(id));
+    }
 
-    @ApiOperation(value = "Create", notes = "Method used for create client from ROLE_MANAGER")
+
+    @ApiOperation(value = "Create", notes = "Method used for update client from ROLE_MANAGER")
     @PreAuthorize("hasRole('ROLE_MANAGER')")
     @PutMapping("/{id}")
     public ResponseEntity<?> update(@PathVariable String id, @RequestBody ClientRequestDTO dto) {
@@ -50,7 +58,7 @@ public class ClientController {
         return ResponseEntity.ok(clientService.update(id, dto));
     }
 
-    @ApiOperation(value = "Create", notes = "Method used for create client from ROLE_MANAGER")
+    @ApiOperation(value = "Create", notes = "Method used for delete client from ROLE_MANAGER")
     @PreAuthorize("hasRole('ROLE_MANAGER')")
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable String id) {
@@ -58,23 +66,13 @@ public class ClientController {
         return ResponseEntity.ok(clientService.delete(id));
     }
 
-    @ApiOperation(value = "Create", notes = "Method used for create client from ROLE_MANAGER")
+    @ApiOperation(value = "Create", notes = "Method used for get all clients from ROLE_MANAGER")
     @PreAuthorize("hasAnyRole('ROLE_MANAGER','ROLE_SUPER_ADMIN','ROLE_ADMIN')")
     @GetMapping("")
     public ResponseEntity<ApiResponse<List<ClientResponseDTO>>> getAll() {
         log.info("Get all clients");
         return ResponseEntity.ok(clientService.getAll());
     }
-
-   /* @ApiOperation(value = "Get", notes = "Method used for get pagination client from ROLE_MANAGER")
-    @PreAuthorize("hasAnyRole('ROLE_MANAGER','ROLE_SUPER_ADMIN','ROLE_ADMIN')")
-    @GetMapping("/get")
-    public ResponseEntity<?> getPagination(@RequestParam(value = "page", defaultValue = "0") int page,
-                                           @RequestParam(value = "size", defaultValue = "15") int size) {
-        log.info("Get client pagination:{}{}", page, size);
-        return ResponseEntity.ok(clientService.pagination(page, size));
-    }*/
-
 
     @ApiOperation(value = "Get", notes = "Method used for filtring client")
     @PreAuthorize("hasAnyRole('ROLE_MANAGER','ROLE_SUPER_ADMIN','ROLE_ADMIN')")

@@ -20,6 +20,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/v1/attach")
 @RequiredArgsConstructor
+@CrossOrigin
 @Api(tags = "Attach Controller 📄")
 public class AttachController {
 

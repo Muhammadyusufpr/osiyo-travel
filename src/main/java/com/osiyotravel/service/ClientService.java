@@ -1,6 +1,7 @@
 package com.osiyotravel.service;
 
 import com.osiyotravel.config.detail.EntityDetails;
+import com.osiyotravel.dto.AttachDTO;
 import com.osiyotravel.dto.ClientAttachDTO;
 import com.osiyotravel.dto.deatil.ApiResponse;
 import com.osiyotravel.dto.request.ClientFilterDTO;
@@ -8,8 +9,11 @@ import com.osiyotravel.dto.request.ClientRequestDTO;
 import com.osiyotravel.dto.response.ClientPaginationDTO;
 import com.osiyotravel.dto.response.ClientResponseDTO;
 import com.osiyotravel.entity.ClientEntity;
+import com.osiyotravel.enums.ProfileRole;
 import com.osiyotravel.exception.ItemNotFoundException;
 import com.osiyotravel.mapper.ClientMapperDTO;
+import com.osiyotravel.mapper.GetClientFullDTO;
+import com.osiyotravel.mapper.GetClientFullResDTO;
 import com.osiyotravel.repository.ClientRepository;
 import com.osiyotravel.repository.filter.ClientFilterRepository;
 import lombok.RequiredArgsConstructor;
@@ -79,6 +83,32 @@ public class ClientService {
         return new ApiResponse<>("Success!", 200, false, toDTO(optional.get()));
     }
 
+    public ApiResponse<?> getInfo(String id) {
+        Optional<GetClientFullDTO> optional = clientRepository.getFullClient(id);
+
+        if (optional.isEmpty()) {
+            log.info("Client not found!{}", id);
+            return new ApiResponse<>("Client not found!", 400, true);
+        }
+        return new ApiResponse<>("Success!", 200, false, toInfoDTO(optional.get()));
+    }
+
+    public GetClientFullResDTO toInfoDTO(GetClientFullDTO mapper) {
+        GetClientFullResDTO dto = new GetClientFullResDTO();
+
+        dto.setId(mapper.getId());
+        dto.setName(mapper.getName());
+        dto.setSurname(mapper.getSurname());
+        dto.setPhone(mapper.getPhone());
+        dto.setGender(mapper.getGender());
+        dto.setAttachDTO(new AttachDTO(mapper.getPhotoId(),
+                attachService.toOpenURL(mapper.getPhotoId())));
+        dto.setFilialName(mapper.getFilialName());
+        dto.setPrice(mapper.getPrice());
+        return dto;
+    }
+
+
     public ApiResponse<?> update(String id, ClientRequestDTO dto) {
         ClientEntity entity = get(id);
 
@@ -102,7 +132,13 @@ public class ClientService {
     }
 
     public ApiResponse<List<ClientResponseDTO>> getAll() {
-        List<ClientResponseDTO> list = clientRepository.findAllByFilialIdAndVisibleTrue(EntityDetails.getFilialId()).stream().map(this::toDTO).toList();
+        List<ClientResponseDTO> list = null;
+        if (EntityDetails.getRole().equals(ProfileRole.ROLE_SUPER_ADMIN)) {
+            list = clientRepository.findAllByVisibleTrue().stream().map(this::toDTO).toList();
+        } else {
+            list = clientRepository.findAllByFilialIdAndVisibleTrue(
+                    EntityDetails.getFilialId()).stream().map(this::toDTO).toList();
+        }
         return new ApiResponse<>("Success!", 200, false, list);
     }
 

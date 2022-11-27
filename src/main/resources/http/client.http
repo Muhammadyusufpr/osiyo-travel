@@ -6,3 +6,10 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiUk9MRV9NQU5BR0VSIiwicGhvb
 {
   "text": "V"
 }
+
+###
+GET http://localhost:8080/api/v1/client/getInfo/402880e48494e7d8018494e8631f0000
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiUk9MRV9NQU5BR0VSIiwicGhvbmUiOiJhZG1pbmpvbiIsImlzcyI6IlBlcmZldHRvIiwiaWQiOiI0MDI4ODAwODg0OGFmNTJiMDE4NDhhZjcxZjRmMDAwMCIsImV4cCI6MTY3MjE0ODQwNSwidXNlcm5hbWUiOiJhZG1pbmpvbiJ9.YnOl027ztZr4hzE4vgXgRScNUkV37nBLpUW7l0AQNIs
+
+
