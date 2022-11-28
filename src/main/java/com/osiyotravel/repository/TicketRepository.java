@@ -11,6 +11,7 @@ import java.util.Optional;
 
 public interface TicketRepository extends JpaRepository<TicketEntity, String> {
     Optional<TicketEntity> findByIdAndVisibleTrue(String id);
+    Optional<TicketEntity> findByClientIdAndVisibleTrue(String id);
 
     @Modifying
     @Transactional

@@ -39,6 +39,7 @@ public class TicketService {
         entity.setClientName(clientName);
         entity.setAirplaneType(dto.getAirplaneType());
         entity.setEndTime(dto.getEndTime());
+        entity.setCreatedDate(LocalDateTime.now());
         ticketRepository.save(entity);
         return new ApiResponse<>("Success!", 200, false);
     }
@@ -56,6 +57,16 @@ public class TicketService {
         if (optional.isEmpty()) {
             log.info("Ticket not found!{}", id);
             return new ApiResponse<>("Ticket not found!", 400, true);
+        }
+        return new ApiResponse<>("Success!", 200, false, toDTO(optional.get()));
+    }
+
+    public ApiResponse<TicketResponseDTO> getByClientId(String clientId) {
+        Optional<TicketEntity> optional = ticketRepository.findByClientIdAndVisibleTrue(clientId);
+
+        if (optional.isEmpty()) {
+            log.info("Client not found!{}", clientId);
+            return new ApiResponse<>("Client not found!", 400, true);
         }
         return new ApiResponse<>("Success!", 200, false, toDTO(optional.get()));
     }

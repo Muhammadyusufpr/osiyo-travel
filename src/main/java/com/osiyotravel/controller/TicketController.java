@@ -23,14 +23,6 @@ import java.util.List;
 public class TicketController {
     private final TicketService ticketService;
 
-/*    @ApiOperation(value = "Create", notes = "Method used for create ticket")
-    @PreAuthorize("hasRole('ROLE_MANAGER')")
-    @PostMapping("")
-    public ResponseEntity<?> create(@RequestBody TicketRequestDTO dto) {
-        log.info("Create Ticket:{}", dto);
-        return ResponseEntity.ok(ticketService.create(dto));
-    }*/
-
 
     @ApiOperation(value = "Get", notes = "Method used for get ticket by id")
     @PreAuthorize("hasRole('ROLE_MANAGER')")
@@ -40,22 +32,13 @@ public class TicketController {
         return ResponseEntity.ok(ticketService.getById(id));
     }
 
-/*    @ApiOperation(value = "Update", notes = "Method used for update ticket")
+    @ApiOperation(value = "Get", notes = "Method used for get ticket by id")
     @PreAuthorize("hasRole('ROLE_MANAGER')")
-    @PutMapping("/{id}")
-    public ResponseEntity<?> update(@PathVariable String id, @RequestBody TicketRequestDTO dto) {
-        log.info("Update ticket:{}{}", id, dto);
-        return ResponseEntity.ok(ticketService.update(id, dto));
-    }*/
-
-   /* @ApiOperation(value = "Delete", notes = "Method used for delete ticket by id")
-    @PreAuthorize("hasRole('ROLE_MANAGER')")
-    @DeleteMapping("/{id}")
-    public ResponseEntity<?> delete(@PathVariable String id) {
-        log.info("Delete ticket:{}", id);
-        return ResponseEntity.ok(ticketService.delete(id));
+    @GetMapping("/get/{id}")
+    public ResponseEntity<?> getByClientId(@PathVariable String id) {
+        log.info("Get ticket by id:{}", id);
+        return ResponseEntity.ok(ticketService.getByClientId(id));
     }
-*/
 
     @ApiOperation(value = "GetAll", notes = "Method used for get all tickets")
     @PreAuthorize("hasRole('ROLE_MANAGER')")
