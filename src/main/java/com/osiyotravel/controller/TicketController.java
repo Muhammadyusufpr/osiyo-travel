@@ -33,7 +33,7 @@ public class TicketController {
 
 
     @ApiOperation(value = "Get", notes = "Method used for get ticket by id")
-    @PreAuthorize("hasRole('ROLE_MANAGER')")
+    @PreAuthorize("hasAnyRole('ROLE_MANAGER','ROLE_SUPER_ADMIN','ROLE_ADMIN')")
     @GetMapping("/{id}")
     public ResponseEntity<?> getById(@PathVariable String id) {
         log.info("Get ticket by id:{}", id);
