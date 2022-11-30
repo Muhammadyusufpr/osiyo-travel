@@ -1,0 +1,3 @@
+echo  "ISHLADI"
+
+mvn clean

@@ -38,12 +38,12 @@ public class ClientFilterRepository {
         if (Optional.ofNullable(dto).isPresent()) {
 
             if (Optional.ofNullable(dto.getText()).isPresent()) {
-                sqlQuery.append(" and client.name like :text ");
+                sqlQuery.append(" and ( client.name like :text ");
                 countSql.append(" and client.name like :text ");
                 sqlQuery.append(" or client.surname like :text ");
                 countSql.append(" or client.surname like :text ");
                 sqlQuery.append(" or client.phone like :text ");
-                countSql.append(" or client.phone like :text ");
+                countSql.append(" or client.phone like :text ) ");
                 param.put("text", "%".concat(dto.getText().concat("%")));
             }
 
