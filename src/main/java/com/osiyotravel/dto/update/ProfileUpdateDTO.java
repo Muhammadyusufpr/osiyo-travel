@@ -25,4 +25,7 @@ public class ProfileUpdateDTO {
 
     @NotNull(message = "full name name not be null")
     private String fullName;
+
+    @NotNull(message = "password not be null")
+    private String password;
 }

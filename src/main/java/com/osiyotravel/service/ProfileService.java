@@ -110,6 +110,7 @@ public class ProfileService {
         entity.setPhone(dto.getPhone());
         entity.setFullName(dto.getFullName());
         entity.setFilialId(dto.getFilialId());
+        entity.setPassword(passwordEncoder.encode(dto.getPassword()));
         profileRepository.save(entity);
         return new ApiResponse<>("Success!", 200, false);
     }
