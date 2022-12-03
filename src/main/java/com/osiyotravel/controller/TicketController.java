@@ -33,7 +33,7 @@ public class TicketController {
     }
 
     @ApiOperation(value = "Get", notes = "Method used for get ticket by id")
-    @PreAuthorize("hasRole('ROLE_MANAGER')")
+    @PreAuthorize("hasAnyRole('ROLE_MANAGER','ROLE_SUPER_ADMIN','ROLE_ADMIN')")
     @GetMapping("/get/{id}")
     public ResponseEntity<?> getByClientId(@PathVariable String id) {
         log.info("Get ticket by id:{}", id);
@@ -41,7 +41,7 @@ public class TicketController {
     }
 
     @ApiOperation(value = "GetAll", notes = "Method used for get all tickets")
-    @PreAuthorize("hasRole('ROLE_MANAGER')")
+    @PreAuthorize("hasAnyRole('ROLE_MANAGER','ROLE_SUPER_ADMIN','ROLE_ADMIN')")
     @GetMapping("/getAll")
     public ResponseEntity<ApiResponse<List<TicketResponseDTO>>> getAll() {
         log.info("Get all tickets");
