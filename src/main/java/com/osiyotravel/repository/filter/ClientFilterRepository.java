@@ -39,16 +39,18 @@ public class ClientFilterRepository {
 
             if (Optional.ofNullable(dto.getText()).isPresent()) {
                 sqlQuery.append(" and ( client.name like :text ");
-                countSql.append(" and client.name like :text ");
+                countSql.append(" and ( client.name like :text ");
                 sqlQuery.append(" or client.surname like :text ");
                 countSql.append(" or client.surname like :text ");
-                sqlQuery.append(" or client.phone like :text ");
+                sqlQuery.append(" or client.phone like :text ) ");
                 countSql.append(" or client.phone like :text ) ");
                 param.put("text", "%".concat(dto.getText().concat("%")));
             }
 
             if (Optional.ofNullable(dto.getFilialId()).isPresent()){
                 sqlQuery.append(" and client.filialId = :filialId");
+                countSql.append(" and client.filialId = :filialId");
+
                 param.put("filialId",dto.getFilialId());
             }
         }

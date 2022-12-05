@@ -26,7 +26,7 @@ public class FilialController {
 
 
     @ApiOperation(value = "Create", notes = "Method used for create filial only can ROLE_SUPER_ADMIN")
-    @PreAuthorize("hasRole('ROLE_SUPER_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_SUPER_ADMIN','ROLE_ADMIN','ROLE_MANAGER')")
     @PostMapping("")
     public ResponseEntity<?> create(@RequestBody FilialRequestDTO dto) {
         log.info("Create filial:{}", dto);
@@ -35,7 +35,7 @@ public class FilialController {
 
 
     @ApiOperation(value = "Get", notes = "Method used for get filial by id only can ROLE_SUPER_ADMIN")
-    @PreAuthorize("hasRole('ROLE_SUPER_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_SUPER_ADMIN','ROLE_ADMIN','ROLE_MANAGER')")
     @GetMapping("/{id}")
     public ResponseEntity<?> getById(@PathVariable String id) {
         log.info("Get filial by id:{}", id);
@@ -43,7 +43,7 @@ public class FilialController {
     }
 
     @ApiOperation(value = "Update", notes = "Method used for update filial only can ROLE_SUPER_ADMIN")
-    @PreAuthorize("hasRole('ROLE_SUPER_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_SUPER_ADMIN','ROLE_ADMIN','ROLE_MANAGER')")
     @PutMapping("/{id}")
     public ResponseEntity<?> update(@PathVariable String id, @RequestBody FilialRequestDTO dto) {
         log.info("Update filial:{}{}", id, dto);
@@ -51,7 +51,7 @@ public class FilialController {
     }
 
     @ApiOperation(value = "Delete", notes = "Method used for delete filial by id only can ROLE_SUPER_ADMIN")
-    @PreAuthorize("hasRole('ROLE_SUPER_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_SUPER_ADMIN','ROLE_ADMIN','ROLE_MANAGER')")
     @DeleteMapping("/{id}")
     public ResponseEntity<Boolean> delete(@PathVariable String id) {
         log.info("Delete filial:{}", id);
@@ -59,7 +59,7 @@ public class FilialController {
     }
 
     @ApiOperation(value = "GetAll", notes = "Method used for get all filials only can ROLE_SUPER_ADMIN")
-    @PreAuthorize("hasRole('ROLE_SUPER_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_SUPER_ADMIN','ROLE_ADMIN','ROLE_MANAGER')")
     @GetMapping("")
     public ResponseEntity<ApiResponse<List<FilialResponseDTO>>> getAll() {
         log.info("Get all filial:");
