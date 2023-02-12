@@ -7,6 +7,7 @@ import com.osiyotravel.dto.request.ProfileDTOForSuperAdmin;
 import com.osiyotravel.dto.response.ProfileCountDTO;
 import com.osiyotravel.dto.response.ProfileResDTO;
 import com.osiyotravel.dto.update.ProfileUpdateDTO;
+import com.osiyotravel.entity.FilialEntity;
 import com.osiyotravel.entity.ProfileEntity;
 import com.osiyotravel.enums.ProfileRole;
 import com.osiyotravel.exception.ItemNotFoundException;
@@ -28,6 +29,7 @@ public class ProfileService {
     private final ProfileRepository profileRepository;
     private final PasswordEncoder passwordEncoder;
     private final ClientService clientService;
+    private final FilialService filialService;
 
 
     public ApiResponse<?> create(ProfileCreateDTO dto) {
@@ -92,7 +94,8 @@ public class ProfileService {
         dto.setPhone(entity.getPhone());
         dto.setPassword(entity.getPassword());
         dto.setUsername(entity.getUsername());
-        dto.setFilialName(entity.getFilial().getName());
+        if (entity.getFilial() != null) dto.setFilialName(entity.getFilial().getName());
+
         return dto;
     }
 
@@ -106,12 +109,22 @@ public class ProfileService {
             return new ApiResponse<>("Username all ready Exists!", 400, true);
         }
 
+        if (Optional.ofNullable(dto.getFilialId()).isPresent())
+            entity.setFilialId(dto.getFilialId());
 
-        entity.setUsername(dto.getUsername());
-        entity.setPhone(dto.getPhone());
-        entity.setFullName(dto.getFullName());
-        entity.setFilialId(dto.getFilialId());
-        entity.setPassword(passwordEncoder.encode(dto.getPassword()));
+
+        if (Optional.ofNullable(dto.getUsername()).isPresent())
+            entity.setUsername(dto.getUsername());
+
+        if (Optional.ofNullable(dto.getPhone()).isPresent())
+            entity.setPhone(dto.getPhone());
+
+        if (Optional.ofNullable(dto.getFullName()).isPresent())
+            entity.setFullName(dto.getFullName());
+
+        if (Optional.ofNullable(dto.getPassword()).isPresent())
+            entity.setPassword(MD5Util.getMd5(dto.getPassword()));
+
         profileRepository.save(entity);
         return new ApiResponse<>("Success!", 200, false);
     }
