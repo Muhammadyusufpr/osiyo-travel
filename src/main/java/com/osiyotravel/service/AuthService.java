@@ -9,6 +9,7 @@ import com.osiyotravel.dto.response.ProfileResDTO;
 import com.osiyotravel.entity.ProfileEntity;
 import com.osiyotravel.repository.ProfileRepository;
 import com.osiyotravel.util.JwtUtil;
+import com.osiyotravel.util.MD5Util;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -40,7 +41,7 @@ public class AuthService {
         ProfileEntity profileEntity = optional.get();
 
 
-        if (!passwordEncoder.matches(dto.getPassword(), profileEntity.getPassword())) {
+        if (!MD5Util.getMd5(dto.getPassword()).equals(profileEntity.getPassword())) {
             log.warn("Phone number Or Password wrong! username = {}", dto.getPassword());
             return new ApiResponse<>("Phone number Or Password wrong!", 400, true);
         }
@@ -48,7 +49,7 @@ public class AuthService {
         Map<String, CurrentFilial> filialMap = customProfileDetailsService.getFilialMap();
         CurrentFilial currentFilial = new CurrentFilial();
         currentFilial.setFilial(profileEntity.getFilial());
-        filialMap.put(dto.getUsername(),currentFilial);
+        filialMap.put(dto.getUsername(), currentFilial);
         customProfileDetailsService.loadUserByUsername(dto.getUsername());
 
         ProfileResDTO profile = new ProfileResDTO();
@@ -62,7 +63,7 @@ public class AuthService {
                 .phone(profileEntity.getUsername())
                 .profileRole(profileEntity.getRole())
                 .username(profileEntity.getUsername()).build();
-        profile.setAccessToken(JwtUtil.encode(jwtDTO,30));
+        profile.setAccessToken(JwtUtil.encode(jwtDTO, 30));
 
         return new ApiResponse<>("Success!", 200, false, profile);
     }

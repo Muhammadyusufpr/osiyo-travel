@@ -109,6 +109,7 @@
                 </configuration>
             </plugin>
         </plugins>
+        <finalName>osiyo</finalName>
     </build>
 
 </project>

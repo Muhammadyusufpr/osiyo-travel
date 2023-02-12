@@ -11,6 +11,7 @@ import com.osiyotravel.entity.ProfileEntity;
 import com.osiyotravel.enums.ProfileRole;
 import com.osiyotravel.exception.ItemNotFoundException;
 import com.osiyotravel.repository.ProfileRepository;
+import com.osiyotravel.util.MD5Util;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -46,7 +47,7 @@ public class ProfileService {
         } else {
             entity.setFilialId(EntityDetails.getFilialId());
         }
-        entity.setPassword(passwordEncoder.encode(dto.getPassword()));
+        entity.setPassword(MD5Util.getMd5(dto.getPassword()));
         entity.setRole(dto.getRole());
         entity.setFullName(dto.getFullName());
         profileRepository.save(entity);
