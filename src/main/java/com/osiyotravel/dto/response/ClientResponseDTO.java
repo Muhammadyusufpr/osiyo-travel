@@ -10,5 +10,5 @@ import java.time.LocalDateTime;
 public class ClientResponseDTO extends ClientRequestDTO {
     private String id;
     private LocalDateTime createdDate;
-    private String filialId;
+    private String filialName;
 }

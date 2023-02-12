@@ -91,7 +91,7 @@ public class ProfileService {
         dto.setPhone(entity.getPhone());
         dto.setPassword(entity.getPassword());
         dto.setUsername(entity.getUsername());
-        dto.setFilialId(entity.getFilialId());
+        dto.setFilialName(entity.getFilial().getName());
         return dto;
     }
 

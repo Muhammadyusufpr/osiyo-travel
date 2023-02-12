@@ -64,11 +64,11 @@ public class ClientService {
     public ClientResponseDTO toDTO(ClientEntity entity) {
         ClientResponseDTO dto = new ClientResponseDTO();
         dto.setName(entity.getName());
-        dto.setFilialId(entity.getFilialId());
+        dto.setFilialName(entity.getFilial().getName());
         dto.setSurname(entity.getSurname());
         dto.setPhone(entity.getPhone());
         dto.setGender(entity.getGender());
-        dto.setAttachId(entity.getAttachId());
+        dto.setAttachId(attachService.toOpenURL(entity.getAttachId()));
         dto.setPrice(entity.getPrice());
         return dto;
     }
